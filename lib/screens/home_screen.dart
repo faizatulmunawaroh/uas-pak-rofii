@@ -1,5 +1,6 @@
 import 'package:celoe/models/assignment.dart';
 import 'package:celoe/models/course.dart';
+import 'package:celoe/screens/my_classes_screen.dart';
 import 'package:celoe/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -60,7 +61,44 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: SingleChildScrollView(
+      body: _widgetOptions.elementAt(_selectedIndex),
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+          boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10)]
+        ),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+          child: BottomNavigationBar(
+            backgroundColor: const Color(0xFFA51B1B), // Dark red
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.white60,
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+               BottomNavigationBarItem(icon: Icon(Icons.school), label: "Kelas Saya"),
+                BottomNavigationBarItem(icon: Icon(Icons.notifications), label: "Notifikasi"),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  static List<Widget> get _widgetOptions => <Widget>[
+    const HomeContent(),
+    const MyClassesScreen(),
+    const Center(child: Text("Notifikasi (Segera Hadir)")),
+  ];
+}
+
+class HomeContent extends StatelessWidget {
+  const HomeContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                  color: CeloeTheme.primaryColor,
                  borderRadius: BorderRadius.circular(16),
                   boxShadow: [
-                    BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10, offset: const Offset(0, 4))
+                    BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 10, offset: const Offset(0, 4))
                   ]
                ),
                child: Column(
@@ -185,28 +223,6 @@ class _HomeScreenState extends State<HomeScreen> {
                const SizedBox(height: 80), // Padding for bottom nav
           ],
         ),
-      ),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-          boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10)]
-        ),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-          child: BottomNavigationBar(
-            backgroundColor: const Color(0xFFA51B1B), // Dark red
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white60,
-            currentIndex: _selectedIndex,
-            onTap: _onItemTapped,
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-               BottomNavigationBarItem(icon: Icon(Icons.school), label: "Kelas Saya"),
-                BottomNavigationBarItem(icon: Icon(Icons.notifications), label: "Notifikasi"),
-            ],
-          ),
-        ),
-      ),
-    );
+      );
   }
 }
