@@ -1,6 +1,7 @@
 import 'package:celoe/models/assignment.dart';
 import 'package:celoe/models/course.dart';
 import 'package:celoe/screens/my_classes_screen.dart';
+import 'package:celoe/screens/notification_screen.dart';
 import 'package:celoe/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text("Halo,", style: TextStyle(color: Colors.white, fontSize: 14)),
-                const Text("DANDY CANDRA PRATAMA", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                const Text("FAIZATUL MUNAWAROH", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
               ],
             ),
              const Spacer(),
@@ -89,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static List<Widget> get _widgetOptions => <Widget>[
     const HomeContent(),
     const MyClassesScreen(),
-    const Center(child: Text("Notifikasi (Segera Hadir)")),
+    const NotificationScreen(),
   ];
 }
 
