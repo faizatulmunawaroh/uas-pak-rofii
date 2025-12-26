@@ -54,30 +54,24 @@ class _LoginScreenState extends State<LoginScreen> {
                          decoration: BoxDecoration(
                            color: Colors.white,
                            shape: BoxShape.circle,
-                           border: Border.all(
-                             color: Colors.grey.shade200,
-                             width: 3,
-                           ),
                            boxShadow: [
                              BoxShadow(
-                               color: Colors.black.withValues(alpha: 0.08),
-                               blurRadius: 15,
-                               spreadRadius: 2,
-                               offset: const Offset(0, 5),
+                               color: Colors.black.withValues(alpha: 0.1),
+                               blurRadius: 10,
+                               offset: const Offset(0, 4),
                              )
                            ]
                          ),
                          child: Padding(
-                           padding: const EdgeInsets.all(12),
+                           padding: const EdgeInsets.all(15), // Increased padding for cleaner look
                            child: Image.asset(
                              'assets/images/logo.png',
                              fit: BoxFit.contain,
                              errorBuilder: (context, error, stackTrace) {
-                               // Fallback ke icon jika logo tidak ditemukan
                                return const Icon(
                                  Icons.school, 
                                  color: CeloeTheme.primaryColor, 
-                                 size: 55
+                                 size: 50
                                );
                              },
                            ),
