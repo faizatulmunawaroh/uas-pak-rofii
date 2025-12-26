@@ -49,12 +49,36 @@ class _LoginScreenState extends State<LoginScreen> {
                      right: 0,
                      child: Center(
                        child: Container(
-                         padding: const EdgeInsets.all(15),
-                        decoration: const BoxDecoration(
-                          color: CeloeTheme.primaryColor,
-                          shape: BoxShape.circle
-                        ),
-                        child: const Icon(Icons.school, color: Colors.white, size: 50), // Logo Placeholder
+                         width: 100,
+                         height: 100,
+                         padding: const EdgeInsets.all(10),
+                         decoration: BoxDecoration(
+                           color: Colors.white,
+                           shape: BoxShape.circle,
+                           boxShadow: [
+                             BoxShadow(
+                               color: Colors.black.withValues(alpha: 0.1),
+                               blurRadius: 10,
+                               offset: const Offset(0, 4),
+                             )
+                           ]
+                         ),
+                         child: ClipOval(
+                           child: Image.asset(
+                             'assets/images/logo.png',
+                             fit: BoxFit.cover,
+                             errorBuilder: (context, error, stackTrace) {
+                               // Fallback ke icon jika logo tidak ditemukan
+                               return Container(
+                                 decoration: const BoxDecoration(
+                                   color: CeloeTheme.primaryColor,
+                                   shape: BoxShape.circle
+                                 ),
+                                 child: const Icon(Icons.school, color: Colors.white, size: 50),
+                               );
+                             },
+                           ),
+                         ),
                        ),
                      ),
                    )

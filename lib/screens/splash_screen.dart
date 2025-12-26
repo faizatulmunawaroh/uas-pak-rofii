@@ -30,6 +30,37 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // Logo
+            Container(
+              width: 120,
+              height: 120,
+              margin: const EdgeInsets.only(bottom: 30),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.2),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
+                  )
+                ]
+              ),
+              child: ClipOval(
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      // Fallback ke icon jika logo tidak ditemukan
+                      return const Icon(Icons.school, color: CeloeTheme.primaryColor, size: 60);
+                    },
+                  ),
+                ),
+              ),
+            ),
+            
              Padding(
               padding: const EdgeInsets.only(bottom: 20),
                // Placeholder for CeLOE logo - using text for now
