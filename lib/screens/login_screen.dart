@@ -25,8 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 300,
                   width: double.infinity,
                   color: Colors.grey.shade300,
-                  child: const Center(child: Icon(Icons.apartment, size: 100, color: Colors.grey)),
-                  // In real app: Image.asset('assets/building.png', fit: BoxFit.cover),
+                  child: Image.asset('assets/images/login_header.png', fit: BoxFit.cover),
                 ),
                  Positioned(
                    bottom: -40,
