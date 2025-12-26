@@ -2,6 +2,7 @@ import 'package:celoe/models/assignment.dart';
 import 'package:celoe/models/course.dart';
 import 'package:celoe/screens/my_classes_screen.dart';
 import 'package:celoe/screens/notification_screen.dart';
+import 'package:celoe/screens/profile_screen.dart';
 import 'package:celoe/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -29,37 +30,44 @@ class _HomeScreenState extends State<HomeScreen> {
         automaticallyImplyLeading: false, // Hide back button
         backgroundColor: CeloeTheme.primaryColor,
         toolbarHeight: 100, // Taller app bar for profile info
-        title: Row(
-          children: [
-             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text("Halo,", style: TextStyle(color: Colors.white, fontSize: 14)),
-                const Text("FAIZATUL MUNAWAROH", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
-              ],
-            ),
-             const Spacer(),
-             Container(
-               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-               decoration: BoxDecoration(
-                 color: const Color(0xFFA51B1B), // Slightly darker red
-                 borderRadius: BorderRadius.circular(20),
-                 border: Border.all(color: Colors.white24)
-               ),
-               child: Row(
-                 mainAxisSize: MainAxisSize.min,
-                 children: const [
-                   Text("MAHASISWA", style: TextStyle(color: Colors.white, fontSize: 12)),
-                   SizedBox(width: 8),
-                   CircleAvatar(
-                     radius: 12,
-                     backgroundColor: Colors.white,
-                     child: Icon(Icons.person, size: 16, color: CeloeTheme.primaryColor),
-                   )
-                 ],
-               ),
-             )
-          ],
+        title: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfileScreen()),
+            );
+          },
+          child: Row(
+            children: [
+               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text("Halo,", style: TextStyle(color: Colors.white, fontSize: 14)),
+                  const Text("FAIZATUL MUNAWAROH", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                ],
+              ),
+               const Spacer(),
+               Container(
+                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                 decoration: BoxDecoration(
+                   color: const Color(0xFFA51B1B), // Slightly darker red
+                   borderRadius: BorderRadius.circular(20),
+                   border: Border.all(color: Colors.white24)
+                 ),
+                 child: Row(
+                   mainAxisSize: MainAxisSize.min,
+                   children: const [
+                     Text("MAHASISWA", style: TextStyle(color: Colors.white, fontSize: 12)),
+                     SizedBox(width: 8),
+                     CircleAvatar(
+                       radius: 12,
+                       backgroundImage: AssetImage('assets/images/profile.jpg'),
+                     )
+                   ],
+                 ),
+               )
+            ],
+          ),
         ),
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
