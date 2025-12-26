@@ -23,6 +23,7 @@ final List<Course> dummyCourses = [
     progress: 0.8,
     semester: "2021/2",
     iconInitials: "UI/UX",
+    imagePath: "assets/images/uiux.png",
   ),
   Course(
     title: "KEWARGANEGARAAN",
@@ -70,5 +71,6 @@ final List<Course> dummyCourses = [
     progress: 0.1,
     semester: "2021/2",
     iconInitials: "OR",
+    imagePath: "assets/images/olahraga.png",
   ),
 ];
