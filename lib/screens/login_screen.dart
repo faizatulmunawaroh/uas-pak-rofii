@@ -44,37 +44,40 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Image.asset('assets/images/login_header.png', fit: BoxFit.cover),
                   ),
                    Positioned(
-                     bottom: -40,
+                     bottom: -50,
                      left: 0,
                      right: 0,
                      child: Center(
                        child: Container(
-                         width: 100,
-                         height: 100,
+                         width: 110,
+                         height: 110,
                          decoration: BoxDecoration(
                            color: Colors.white,
                            shape: BoxShape.circle,
+                           border: Border.all(
+                             color: Colors.grey.shade200,
+                             width: 3,
+                           ),
                            boxShadow: [
                              BoxShadow(
-                               color: Colors.black.withValues(alpha: 0.1),
-                               blurRadius: 10,
-                               offset: const Offset(0, 4),
+                               color: Colors.black.withValues(alpha: 0.08),
+                               blurRadius: 15,
+                               spreadRadius: 2,
+                               offset: const Offset(0, 5),
                              )
                            ]
                          ),
                          child: Padding(
-                           padding: const EdgeInsets.all(8),
+                           padding: const EdgeInsets.all(12),
                            child: Image.asset(
                              'assets/images/logo.png',
                              fit: BoxFit.contain,
                              errorBuilder: (context, error, stackTrace) {
                                // Fallback ke icon jika logo tidak ditemukan
-                               return Container(
-                                 decoration: const BoxDecoration(
-                                   color: CeloeTheme.primaryColor,
-                                   shape: BoxShape.circle
-                                 ),
-                                 child: const Icon(Icons.school, color: Colors.white, size: 50),
+                               return const Icon(
+                                 Icons.school, 
+                                 color: CeloeTheme.primaryColor, 
+                                 size: 55
                                );
                              },
                            ),

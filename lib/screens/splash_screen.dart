@@ -32,28 +32,37 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             // Logo
             Container(
-              width: 120,
-              height: 120,
+              width: 140,
+              height: 140,
               margin: const EdgeInsets.only(bottom: 30),
               decoration: BoxDecoration(
                 color: Colors.white,
                 shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white.withValues(alpha: 0.3),
+                  width: 4,
+                ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.2),
-                    blurRadius: 20,
-                    offset: const Offset(0, 8),
+                    color: Colors.black.withValues(alpha: 0.15),
+                    blurRadius: 25,
+                    spreadRadius: 3,
+                    offset: const Offset(0, 10),
                   )
                 ]
               ),
               child: Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(15),
                 child: Image.asset(
                   'assets/images/logo.png',
                   fit: BoxFit.contain,
                   errorBuilder: (context, error, stackTrace) {
                     // Fallback ke icon jika logo tidak ditemukan
-                    return const Icon(Icons.school, color: CeloeTheme.primaryColor, size: 60);
+                    return const Icon(
+                      Icons.school, 
+                      color: CeloeTheme.primaryColor, 
+                      size: 70
+                    );
                   },
                 ),
               ),
