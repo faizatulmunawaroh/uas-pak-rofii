@@ -1,4 +1,5 @@
 import 'package:celoe/screens/login_screen.dart';
+import 'package:celoe/screens/settings_screen.dart';
 import 'package:celoe/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -78,6 +79,31 @@ class ProfileScreen extends StatelessWidget {
                   _buildProfileItem(Icons.calendar_today, "Semester", "4"),
                   
                   const SizedBox(height: 40),
+                  
+                  // Settings Button
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                        );
+                      },
+                      icon: const Icon(Icons.settings),
+                      label: const Text("Pengaturan"),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: CeloeTheme.primaryColor,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        )
+                      ),
+                    ),
+                  ),
+                  
+                  const SizedBox(height: 12),
                   
                   SizedBox(
                     width: double.infinity,
