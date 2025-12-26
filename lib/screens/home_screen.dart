@@ -1,5 +1,8 @@
 import 'package:celoe/models/assignment.dart';
 import 'package:celoe/models/course.dart';
+import 'package:celoe/screens/announcements_screen.dart';
+import 'package:celoe/screens/assignment_detail_screen.dart';
+import 'package:celoe/screens/course_detail_screen.dart';
 import 'package:celoe/screens/my_classes_screen.dart';
 import 'package:celoe/screens/notification_screen.dart';
 import 'package:celoe/screens/profile_screen.dart';
@@ -115,49 +118,69 @@ class HomeContent extends StatelessWidget {
              // Upcoming Tasks Section
              const Text("Tugas Yang Akan Datang", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
              const SizedBox(height: 10),
-             Container(
-               width: double.infinity,
-               padding: const EdgeInsets.all(16),
-               decoration: BoxDecoration(
-                 color: CeloeTheme.primaryColor,
-                 borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 10, offset: const Offset(0, 4))
-                  ]
-               ),
-               child: Column(
-                 children: [
-                   Text(
-                     nextAssignment.course.toUpperCase(),
-                     style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
-                     textAlign: TextAlign.center,
+             GestureDetector(
+               onTap: () {
+                 Navigator.push(
+                   context,
+                   MaterialPageRoute(
+                     builder: (context) => AssignmentDetailScreen(
+                       assignment: nextAssignment,
+                     ),
                    ),
-                   const SizedBox(height: 10),
-                   Text(
-                     nextAssignment.title,
-                     style: const TextStyle(color: Colors.white, fontSize: 14),
-                     textAlign: TextAlign.center,
-                   ),
-                    const SizedBox(height: 20),
-                    const Divider(color: Colors.white24),
-                    const SizedBox(height: 5),
+                 );
+               },
+               child: Container(
+                 width: double.infinity,
+                 padding: const EdgeInsets.all(16),
+                 decoration: BoxDecoration(
+                   color: CeloeTheme.primaryColor,
+                   borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 10, offset: const Offset(0, 4))
+                    ]
+                 ),
+                 child: Column(
+                   children: [
                      Text(
-                     "Waktu Pengumpulan\n${nextAssignment.dueDate}",
-                     style: const TextStyle(color: Colors.white, fontSize: 12),
-                     textAlign: TextAlign.center,
-                   ),
-                 ],
+                       nextAssignment.course.toUpperCase(),
+                       style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                       textAlign: TextAlign.center,
+                     ),
+                     const SizedBox(height: 10),
+                     Text(
+                       nextAssignment.title,
+                       style: const TextStyle(color: Colors.white, fontSize: 14),
+                       textAlign: TextAlign.center,
+                     ),
+                      const SizedBox(height: 20),
+                      const Divider(color: Colors.white24),
+                      const SizedBox(height: 5),
+                       Text(
+                       "Waktu Pengumpulan\n${nextAssignment.dueDate}",
+                       style: const TextStyle(color: Colors.white, fontSize: 12),
+                       textAlign: TextAlign.center,
+                     ),
+                   ],
+                 ),
                ),
              ),
 
              const SizedBox(height: 24),
 
              // Announcements
-             const Row(
+             Row(
                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                children: [
-                 Text("Pengumuman Terakhir", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                 Text("Lihat Semua", style: TextStyle(color: Colors.blue, fontSize: 12)),
+                 const Text("Pengumuman Terakhir", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                 GestureDetector(
+                   onTap: () {
+                     Navigator.push(
+                       context,
+                       MaterialPageRoute(builder: (context) => const AnnouncementsScreen()),
+                     );
+                   },
+                   child: const Text("Lihat Semua", style: TextStyle(color: Colors.blue, fontSize: 12)),
+                 ),
                ],
              ),
              const SizedBox(height: 10),
@@ -181,57 +204,67 @@ class HomeContent extends StatelessWidget {
                const Text("Progres Kelas", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                const SizedBox(height: 10),
 
-               ...dummyCourses.map((course) => Padding(
-                 padding: const EdgeInsets.only(bottom: 16),
-                 child: Row(
-                   children: [
-                     Container(
-                       width: 80,
-                       height: 80,
-                       decoration: BoxDecoration(
-                         color: Colors.primaries[course.title.length % Colors.primaries.length].shade100, 
-                         borderRadius: BorderRadius.circular(8),
-                         image: course.imagePath != null 
-                            ? DecorationImage(
-                                image: AssetImage(course.imagePath!),
-                                fit: BoxFit.cover
-                              ) 
-                            : null
-                       ),
-                        child: course.imagePath == null ? Center(
-                         child: Text(
-                           course.iconInitials, 
-                           style: TextStyle(
-                             color: Colors.primaries[course.title.length % Colors.primaries.length].shade900,
-                             fontWeight: FontWeight.bold,
-                             fontSize: 18
-                            )
-                          ),
-                       ) : null,
+               ...dummyCourses.map((course) => GestureDetector(
+                 onTap: () {
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                       builder: (context) => CourseDetailScreen(course: course),
                      ),
-                     const SizedBox(width: 12),
-                     Expanded(
-                       child: Column(
-                         crossAxisAlignment: CrossAxisAlignment.start,
-                         children: [
-                           Text(course.semester, style: const TextStyle(fontSize: 10, color: Colors.grey)),
-                           Text(course.title, maxLines: 2, overflow: TextOverflow.ellipsis, 
-                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                            Text(course.code, style: const TextStyle(fontSize: 10, color: Colors.grey)),
-                            const SizedBox(height: 8),
-                            LinearProgressIndicator(
-                              value: course.progress,
-                              color: const Color(0xFFA51B1B),
-                              backgroundColor: Colors.grey.shade200,
-                              minHeight: 8,
-                              borderRadius: BorderRadius.circular(4),
+                   );
+                 },
+                 child: Padding(
+                   padding: const EdgeInsets.only(bottom: 16),
+                   child: Row(
+                     children: [
+                       Container(
+                         width: 80,
+                         height: 80,
+                         decoration: BoxDecoration(
+                           color: Colors.primaries[course.title.length % Colors.primaries.length].shade100, 
+                           borderRadius: BorderRadius.circular(8),
+                           image: course.imagePath != null 
+                              ? DecorationImage(
+                                  image: AssetImage(course.imagePath!),
+                                  fit: BoxFit.cover
+                                ) 
+                              : null
+                         ),
+                          child: course.imagePath == null ? Center(
+                           child: Text(
+                             course.iconInitials, 
+                             style: TextStyle(
+                               color: Colors.primaries[course.title.length % Colors.primaries.length].shade900,
+                               fontWeight: FontWeight.bold,
+                               fontSize: 18
+                              )
                             ),
-                             const SizedBox(height: 4),
-                             Text("${(course.progress * 100).toInt()}% Selesai", style: const TextStyle(fontSize: 10))
-                         ],
+                         ) : null,
                        ),
-                     )
-                   ],
+                       const SizedBox(width: 12),
+                       Expanded(
+                         child: Column(
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                           children: [
+                             Text(course.semester, style: const TextStyle(fontSize: 10, color: Colors.grey)),
+                             Text(course.title, maxLines: 2, overflow: TextOverflow.ellipsis, 
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                              Text(course.code, style: const TextStyle(fontSize: 10, color: Colors.grey)),
+                              const SizedBox(height: 8),
+                              LinearProgressIndicator(
+                                value: course.progress,
+                                color: const Color(0xFFA51B1B),
+                                backgroundColor: Colors.grey.shade200,
+                                minHeight: 8,
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                               const SizedBox(height: 4),
+                               Text("${(course.progress * 100).toInt()}% Selesai", style: const TextStyle(fontSize: 10))
+                           ],
+                         ),
+                       )
+                     ],
+                   ),
                  ),
                )),
 

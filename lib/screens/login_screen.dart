@@ -1,6 +1,9 @@
+import 'package:celoe/providers/app_state.dart';
+import 'package:celoe/screens/help_screen.dart';
 import 'package:celoe/screens/home_screen.dart';
 import 'package:celoe/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,6 +14,17 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _obscurePassword = true;
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,31 +32,34 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Stack(
-              children: [
-                 // Placeholder for building image
-                Container(
-                  height: 300,
-                  width: double.infinity,
-                  color: Colors.grey.shade300,
-                  child: Image.asset('assets/images/login_header.png', fit: BoxFit.cover),
-                ),
-                 Positioned(
-                   bottom: -40,
-                   left: 0,
-                   right: 0,
-                   child: Center(
-                     child: Container(
-                       padding: const EdgeInsets.all(15),
-                      decoration: const BoxDecoration(
-                        color: CeloeTheme.primaryColor,
-                        shape: BoxShape.circle
-                      ),
-                      child: const Icon(Icons.school, color: Colors.white, size: 50), // Logo Placeholder
+            Form(
+              key: _formKey,
+              child: Stack(
+                children: [
+                   // Placeholder for building image
+                  Container(
+                    height: 300,
+                    width: double.infinity,
+                    color: Colors.grey.shade300,
+                    child: Image.asset('assets/images/login_header.png', fit: BoxFit.cover),
+                  ),
+                   Positioned(
+                     bottom: -40,
+                     left: 0,
+                     right: 0,
+                     child: Center(
+                       child: Container(
+                         padding: const EdgeInsets.all(15),
+                        decoration: const BoxDecoration(
+                          color: CeloeTheme.primaryColor,
+                          shape: BoxShape.circle
+                        ),
+                        child: const Icon(Icons.school, color: Colors.white, size: 50), // Logo Placeholder
+                       ),
                      ),
-                   ),
-                 )
-              ],
+                   )
+                ],
+              ),
             ),
             const SizedBox(height: 50),
             
@@ -64,15 +81,32 @@ class _LoginScreenState extends State<LoginScreen> {
                   
                   // Email Field
                   const Text("Email 365", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey)),
-                  TextField(
-                    decoration: InputDecoration(
-                        enabledBorder: const UnderlineInputBorder(
+                  TextFormField(
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.red),
                         ),
-                        focusedBorder: const UnderlineInputBorder(
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red, width: 2),
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red),
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.red, width: 2),
                         ),
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Email tidak boleh kosong';
+                      }
+                      if (!value.contains('@')) {
+                        return 'Format email tidak valid';
+                      }
+                      return null;
+                    },
                   ),
 
                   const SizedBox(height: 20),
@@ -91,7 +125,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       )
                     ],
                   ),
-                   TextField(
+                   TextFormField(
+                     controller: _passwordController,
                      obscureText: _obscurePassword,
                     decoration: const InputDecoration(
                          enabledBorder: UnderlineInputBorder(
@@ -100,24 +135,49 @@ class _LoginScreenState extends State<LoginScreen> {
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.red, width: 2),
                         ),
+                        errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red),
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red, width: 2),
+                        ),
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Password tidak boleh kosong';
+                      }
+                      if (value.length < 6) {
+                        return 'Password minimal 6 karakter';
+                      }
+                      return null;
+                    },
                   ),
                   
                   const SizedBox(height: 40),
                   
                   ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => const HomeScreen()),
-                      );
-                    },
-                    child: const Text("Log In", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    onPressed: _isLoading ? null : _handleLogin,
+                    child: _isLoading
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                            ),
+                          )
+                        : const Text("Log In", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   ),
                   
                   const SizedBox(height: 20),
                    Center(
                     child: TextButton(
-                      onPressed: () {}, 
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const HelpScreen()),
+                        );
+                      }, 
                       child: const Text("Bantuan ?", style: TextStyle(color: CeloeTheme.primaryColor))
                     )
                   ),
@@ -138,6 +198,34 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _handleLogin() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      // Simulasi delay login
+      await Future.delayed(const Duration(seconds: 1));
+
+      if (mounted) {
+        final appState = Provider.of<AppState>(context, listen: false);
+        await appState.login(_emailController.text, _passwordController.text);
+
+        if (mounted) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
+          );
+        }
+      }
+
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 }
 

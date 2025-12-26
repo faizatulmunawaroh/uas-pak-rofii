@@ -1,9 +1,16 @@
+import 'package:celoe/providers/app_state.dart';
 import 'package:celoe/screens/splash_screen.dart';
 import 'package:celoe/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => AppState(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
