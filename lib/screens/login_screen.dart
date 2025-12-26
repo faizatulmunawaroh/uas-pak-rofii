@@ -35,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Form(
               key: _formKey,
               child: Stack(
+                clipBehavior: Clip.none,
                 children: [
                    // Placeholder for building image
                   Container(
