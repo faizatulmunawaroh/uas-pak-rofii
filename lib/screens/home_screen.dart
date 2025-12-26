@@ -181,10 +181,16 @@ class HomeContent extends StatelessWidget {
                        width: 80,
                        height: 80,
                        decoration: BoxDecoration(
-                         color: Colors.primaries[course.title.length % Colors.primaries.length].shade100, // Randomish pastel color
-                         borderRadius: BorderRadius.circular(8)
+                         color: Colors.primaries[course.title.length % Colors.primaries.length].shade100, 
+                         borderRadius: BorderRadius.circular(8),
+                         image: course.imagePath != null 
+                            ? DecorationImage(
+                                image: AssetImage(course.imagePath!),
+                                fit: BoxFit.cover
+                              ) 
+                            : null
                        ),
-                        child: Center(
+                        child: course.imagePath == null ? Center(
                          child: Text(
                            course.iconInitials, 
                            style: TextStyle(
@@ -193,7 +199,7 @@ class HomeContent extends StatelessWidget {
                              fontSize: 18
                             )
                           ),
-                       ),
+                       ) : null,
                      ),
                      const SizedBox(width: 12),
                      Expanded(

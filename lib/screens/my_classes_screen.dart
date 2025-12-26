@@ -90,12 +90,18 @@ class _MyClassesScreenState extends State<MyClassesScreen> {
                    children: [
                      Container(
                        width: 60,
-                       height: 60,
+                       height: 80, // Taller for book cover aspect ratio
                        decoration: BoxDecoration(
                          color: Colors.primaries[course.title.length % Colors.primaries.length].shade100, 
-                         borderRadius: BorderRadius.circular(8)
+                         borderRadius: BorderRadius.circular(8),
+                         image: course.imagePath != null
+                            ? DecorationImage(
+                                image: AssetImage(course.imagePath!),
+                                fit: BoxFit.cover
+                              )
+                            : null
                        ),
-                        child: Center(
+                        child: course.imagePath == null ? Center(
                          child: Text(
                            course.iconInitials, 
                            style: TextStyle(
@@ -104,7 +110,7 @@ class _MyClassesScreenState extends State<MyClassesScreen> {
                              fontSize: 14
                             )
                           ),
-                       ),
+                       ) : null,
                      ),
                      const SizedBox(width: 12),
                      Expanded(
