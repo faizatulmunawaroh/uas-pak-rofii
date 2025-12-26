@@ -51,7 +51,6 @@ class _LoginScreenState extends State<LoginScreen> {
                        child: Container(
                          width: 100,
                          height: 100,
-                         padding: const EdgeInsets.all(10),
                          decoration: BoxDecoration(
                            color: Colors.white,
                            shape: BoxShape.circle,
@@ -63,10 +62,11 @@ class _LoginScreenState extends State<LoginScreen> {
                              )
                            ]
                          ),
-                         child: ClipOval(
+                         child: Padding(
+                           padding: const EdgeInsets.all(8),
                            child: Image.asset(
                              'assets/images/logo.png',
-                             fit: BoxFit.cover,
+                             fit: BoxFit.contain,
                              errorBuilder: (context, error, stackTrace) {
                                // Fallback ke icon jika logo tidak ditemukan
                                return Container(

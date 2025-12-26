@@ -46,17 +46,15 @@ class _SplashScreenState extends State<SplashScreen> {
                   )
                 ]
               ),
-              child: ClipOval(
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      // Fallback ke icon jika logo tidak ditemukan
-                      return const Icon(Icons.school, color: CeloeTheme.primaryColor, size: 60);
-                    },
-                  ),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Image.asset(
+                  'assets/images/logo.png',
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) {
+                    // Fallback ke icon jika logo tidak ditemukan
+                    return const Icon(Icons.school, color: CeloeTheme.primaryColor, size: 60);
+                  },
                 ),
               ),
             ),
